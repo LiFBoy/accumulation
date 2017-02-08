@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+
+<script>
+
+  var lists=[];
+
+
+
+
+    geta("https://cnodejs.org/api/v1/topics").then(function(response) {
+
+
+
+
+
+    }, function(error) {
+
+
+      console.error('出错了', error);
+    });
+
+
+
+  function  geta(url) {
+    return new Promise((resolve, reject)=>{
+      let request= new XMLHttpRequest();
+
+      request.onreadystatechange = function() {
+        if (request.readyState === 4) {
+          if (request.status === 200) {
+            resolve(request.responseText);
+          } else {
+            reject();
+          }
+        }
+      };
+      request.open("GET", url, true);
+      request.send(null);
+
+    });
+
+  };
+
+
+
+
+
+
+
+  console.log(lists)
+
+
+
+</script>
+</html>

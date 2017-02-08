@@ -1,0 +1,9 @@
+{
+  "apps" : [{
+    "name" : "Wolverine",  //名称
+    "exec_interpreter": "./node_modules/.bin/babel-node",
+    "script": "./bin/run", //程序入库
+    "cwd": "./",           //根目录
+    "watch":true
+  }]
+}

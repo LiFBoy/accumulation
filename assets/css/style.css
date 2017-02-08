@@ -1,0 +1,214 @@
+
+.che{
+
+    position: fixed;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+
+    z-index: 99;
+
+}
+
+.zIndex{
+    /*background-color: rgba(0, 0, 0, 0.3);*/
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index:10;
+}
+.tooltips-content{
+    width: 15rem;
+    margin: auto;
+    position: relative;
+    z-index: 100;
+
+}
+.tooltips{
+    width: 0;
+    height: 0;
+    border-left:10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #ffffff;
+    margin: auto;
+    position: relative;
+    z-index: 101;
+    top: 1px;
+}
+
+.tooltips-device-info{
+    width: 15rem;
+    height: auto;
+
+    border-radius: 10px;
+    border: 1px solid #dddddd;
+    background: #ffffff;
+
+
+    position: relative;
+    z-index: 100;
+}
+
+.tooltips-device-name{
+    width: 100%;
+    height: 4.4rem;
+    line-height: 4.4rem;
+    border-bottom: 1px solid #dddddd;
+
+}
+
+.tooltips-device-name:first-child{
+    width: 100%;
+    border-bottom: 1px solid #dddddd !important;
+}
+
+.tooltips-device-name:last-child{
+    width: 100%;
+    border-bottom: 0 !important;
+}
+
+.map-container{
+    position:absolute;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    margin:0;
+}
+
+.nobinding{
+    text-align: center;
+    height:100%;
+}
+.nobinding img{
+    margin-top:100px;
+    width:60%;
+}
+
+.binding{
+    width:100%;
+    vertical-align: top;
+
+}
+
+.list-title{
+    margin: 20px 5px 5px 10px;
+    color: #606162;
+}
+ul{
+    margin: 20px 0 0 0;
+    padding: 0 10px;
+    background:#fff;
+
+}
+
+ul li{
+    list-style: none;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+    position:relative;
+    font-size: 16px;
+}
+ul li:last-child{
+    border:none;
+
+}
+
+ul li .pull-right{
+    position:absolute;
+    right: 0;
+    font-size: 14px;
+}
+.blue{
+    color: #1fb5eb;
+}
+
+
+.btn-battery{
+    position:absolute;
+    right: 1.5rem;
+    top: 6rem;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    background:#fff;
+    text-align:center;
+    line-height: 3rem;
+    box-shadow: 0px 0px 6px rgba(0,0,0,.5);
+}
+.fa-battery-0,.fa-battery-1{
+    color:#fc111e;
+}
+
+.fa-battery-2,.fa-battery-3,.fa-battery-4{
+    color:#2dc751;
+}
+
+
+.btn-phone{
+    width:6rem;
+    height:6rem;
+    position:absolute;
+    right: 2rem;
+    bottom: 12rem;
+    z-index:3;
+    background:#fff;
+    color: #1fb5eb;
+    text-align: center;
+    border-radius: 50%;
+    padding-top: 1rem;
+    box-shadow: 0 0 6px rgba(0,0,0,.5);
+    font-size: 1rem;
+    text-transform:none;
+    text-decoration:none;
+
+}
+
+.btn-location{
+    width:6rem;
+    height:6rem;
+    position:absolute;
+    right: 2rem;
+    bottom: 6rem;
+    z-index:3;
+    background:#fff;
+
+    text-align: center;
+    border-radius: 50%;
+    padding-top: 1rem;
+    box-shadow: 0 0 6px rgba(0,0,0,.5);
+    font-size: 1rem;
+    text-transform:none;
+
+}
+
+.btn-phone a{
+    color: #1fb5eb;
+    text-decoration:none;
+}
+.btn-phone a:hover,a:focus{
+    color: #1fb5eb !important;
+    text-decoration: none !important;
+}
+/*a:hover, a:focus{*/
+    /*color: #1fb5eb !important;*/
+    /*text-decoration: none !important;*/
+/*}*/
+.btn-phone div,.btn-location div{
+    margin: 0;
+    padding: 0;
+}
+
+.btn-location{
+    background: #1fb5eb;
+    color:#fff;
+    bottom:50px;
+}
+
+.hide{
+    display:none;
+}
+

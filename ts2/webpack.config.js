@@ -1,0 +1,175 @@
+var webpack = require('webpack');
+var path = require('path');
+var ExtractTextPlugin = require('extract-text-webpack-plugin'); //css单独打包
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
+var px2rem = require('postcss-px2rem');
+var publicPath = '/dist-clock/'; //服务器路径
+
+var plugins = [];
+
+// if (process.argv.indexOf('-p') > -1) { //生产环境
+//     plugins.push(new webpack.DefinePlugin({ //编译成生产版本
+//         'process.env': {
+//             NODE_ENV: JSON.stringify('production')
+//         }
+//     }));
+//     publicPath = '/react-cnode/dist/';
+//     path = __dirname + '/react-cnode/dist/';
+// }
+plugins.push(new webpack.optimize.UglifyJsPlugin({compress: {warnings: false, drop_console: true}}));//代码压缩/**/
+
+
+
+ // plugins.push(new webpack.optimize.UglifyJsPlugin());//代码压缩
+ plugins.push(
+     new webpack.DefinePlugin({
+     'process.env': {
+         'NODE_ENV': JSON.stringify('production')
+     }
+ }));
+
+
+
+ plugins.push(new webpack.optimize.DedupePlugin());
+ plugins.push(new webpack.optimize.OccurenceOrderPlugin());
+
+plugins.push(new ExtractTextPlugin('css/[name].css')); //css单独打包
+plugins.push(new webpack.HotModuleReplacementPlugin());//热替换
+plugins.push(new HtmlWebpackPlugin({
+        filename: '../index.html', //生成的html存放路径，相对于 path
+        template: './src/Template/index.html', //html模板路径
+        hash: true,
+        //为静态资源生成hash值
+        chunks: ['index', 'vendors'],
+        inject: 'body'
+    })
+);
+
+
+// plugins.push(new SpritesmithPlugin({
+//     src: {
+//         cwd: path.resolve(__dirname, 'src/ico'),
+//         glob: '*.png'
+//     },
+//     target: {
+//         image: path.resolve(__dirname, 'src/spritesmith-generated/sprite.png'),
+//         css: path.resolve(__dirname, 'src/spritesmith-generated/sprite.styl')
+//     },
+//     apiOptions: {
+//         cssImageRef: "~sprite.png"
+//     }
+// }))
+
+plugins.push(new webpack.optimize.CommonsChunkPlugin({
+    name: 'vendors', // 将公共模块提取，生成名为`vendors`的chunk chunks: chunks, minChunks: chunks.length // 提取所有entry共同依赖的模块 }),
+    minChunks: Infinity
+}));
+module.exports = {
+    entry: {
+        index: [
+            './src/index'
+        ]
+    },
+    output: {
+        publicPath: publicPath, //编译好的文件，在服务器的路径
+        path: path.join(__dirname, 'dist-clock'), //编译到当前目录
+        filename: '[name].js'
+    },
+
+
+    devServer:{
+        contentBase: './',
+        port: 5018,
+        inline: true,
+        stats: 'errors-only',
+        historyApiFallback: true,
+        watchOptions: {
+            aggregateTimeout: 100,
+            poll: 500
+        }
+
+    },
+    // devtool: 'source-map',
+    module: {
+        loaders: [
+
+            {
+                test: /\.js$/,
+                exclude: /^node_modules$/,
+                loader: 'babel',
+                query:{compact:false}
+            }, {
+                test: /\.css$/,
+                exclude: /^node_modules$/,
+                loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer-loader')
+            }, {
+                test: /\.less/,
+                exclude: /^node_modules$/,
+                loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer-loader!less-loader')
+            }, {
+                test: /\.scss/,
+                exclude: /^node_modules$/,
+                loaders: ["style", "css?sourceMap", "sass?sourceMap"]
+            }, {
+                test: /\.(eot|woff|svg|ttf|woff2|gif|appcache)(\?|$)/,
+                exclude: /^node_modules$/,
+                loader: 'file-loader?name=[name].[ext]'
+            },
+
+            //
+            // {
+            //     test: /\.(png|jpg)$/,
+            //     exclude: /^node_modules$/,
+            //     loader: 'url?limit=20000&name=[name].[ext]' //注意后面那个limit的参数，当你图片大小小于这个限制的时候，会自动启用base64编码图片
+            // },
+
+
+            {
+                test: /\.(png|jpg)$/,
+                exclude: /^node_modules$/,
+                loader: 'url?limit=25000' //注意后面那个limit的参数，当你图片大小小于这个限制的时候，会自动启用base64编码图片
+            },
+
+            // {test: /\.(png|jpg)$/, exclude: /^node_modules$/,loader: 'base64-inline-loader'},
+
+
+            {
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                loaders: ['jsx?harmony', 'babel?presets[]=react,presets[]=es2015,presets[]=stage-3'],
+                include: path.join(__dirname, 'src')
+            },
+
+            {
+                test:/\.(css|js|less)$/,
+                loader:'webpack-px-to-rem',
+                //这个配置是可选的
+                query:{
+                    // 1rem=npx 默认为 10
+                    basePx:20,
+                    //只会转换大于min的px 默认为0
+                    //因为很小的px（比如border的1px）转换为rem后在很小的设备上结果会小于1px，有的设备就会不显示
+                    min:1,
+                    //转换后的rem值保留的小数点后位数 默认为3
+                    floatWidth:3
+                }
+            }
+        ]
+    },
+
+    // postcss: function() {
+    //     return [px2rem({
+    //
+    //         baseDpr: 2,             // 基于设备的Dpr
+    //         threeVersion: false,    // 是否生成 @1x, @2x and @3x 三个版本(默认: false)，打开后
+    //         remVersion: true,       // 是否生成rem版本(默认: true)
+    //         remUnit: 75,            // rem转换比例 (默认: 75)
+    //         remPrecision: 5         // rem保留几位数 (默认: 5)
+    //     })];
+    // },
+    plugins: plugins,
+    resolve: {
+        extensions: ['', '.js', '.jsx'] //后缀名自动补全
+    },
+};

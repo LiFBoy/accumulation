@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<script src="./node_modules/lodash/lodash.js"></script>
+<body>
+
+</body>
+
+
+<script>
+
+    var array = [];
+    //生成一个100w 长度的数组，并赋值随机数
+    for(var i=0;i<1000000;i++) {
+        array.push(Math.floor(Math.random()*10000))
+    }
+
+    //lodash forEach 遍历
+    console.time('lodash for Each');
+    _.forEach(array,function (key) {
+
+    });
+    console.timeEnd('lodash for Each');
+
+    //原生forEach 遍历
+    console.time('native for Each');
+    array.forEach(function (key) {
+
+    });
+    console.timeEnd('native for Each');
+
+
+
+//    new Promise(function(resolve, reject) {
+//        // A mock async action using setTimeout
+//        setTimeout(function() { resolve(10); }, 3000);
+//    })
+//            .then(function(result) {
+//                console.log(result);
+//            });
+
+
+
+//setTimeout(function() {
+//    console.log(2)
+//}, 1000);
+//
+//
+//    new Promise(function(resolve, reject) {
+//        // A mock async action using setTimeout
+//        setTimeout(function() { resolve(10); }, 2000);
+//    }).then(function(num) { console.log('first then: ', num); return num * 2; })
+//            .then(function(num) { console.log('second then: ', num); return num * 2; })
+//            .then(function(num) { console.log('last then: ', num);});
+//
+//
+//
+//
+//setTimeout(function() {
+//    console.log('你好!');
+//}, 2000);
+
+
+
+//
+//var dream = {};
+//Object.defineProperty(dream, 'name', {
+//    value: 'dreamapple',
+//    writable: true,//可改变的
+//    enumerable: true // 可枚举
+//});
+//
+//
+//
+//
+//console.log(Object.keys(dream));
+//console.log(dream.name); // dreamapple
+//dream.name = 'apple'; // 修改name属性
+//console.log(dream.name); // 并不是apple,依旧是dreamapple
+
+
+    function readonly(target, key, descriptor) {
+        descriptor.writable = false
+        return descriptor
+    }
+
+    class Dog {
+        @readonly
+        bark () {
+            return 'wang!wang!'
+        }
+    }
+
+    let dog = new Dog()
+
+    console.log(dog.bark())
+    dog.bark = 'bark!bark!'
+
+
+</script>
+</html>
